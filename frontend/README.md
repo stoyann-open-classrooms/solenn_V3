@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+https://github.com/stoyann-open-classrooms/solenn_V3
+
 ## Available Scripts
 
 In the project directory, you can run:
