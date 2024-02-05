@@ -18,17 +18,17 @@ const LoginScreen = () => {
 
   const [login, { isLoading }] = useLoginMutation()
 
-  // const { userInfo } = useSelector((state) => state.auth)
+ const { userInfo } = useSelector((state) => state.auth)
 
   const { search } = useLocation()
   const sp = new URLSearchParams(search)
   const redirect = sp.get('redirect') || '/' // redirect to home page if no redirect query param
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect)
-  //   }
-  // }, [userInfo, redirect, navigate])
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect)
+    }
+  }, [userInfo, redirect, navigate])
 
   const submitHandler = async (e) => {
     e.preventDefault()

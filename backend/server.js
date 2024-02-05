@@ -13,6 +13,9 @@ const port = process.env.PORT || 5000
 const app = express()
 connectDB()
 
+// Enable CORS
+app.use(cors())
+
 // Body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
