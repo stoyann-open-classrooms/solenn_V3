@@ -1,6 +1,5 @@
 const simulations = [
   {
-    createdBy: 'admin',
     // si True type abonement
     raccordReseau: true,
     pro: false,
