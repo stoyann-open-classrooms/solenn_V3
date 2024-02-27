@@ -4,8 +4,8 @@ import { Button } from 'react-bootstrap'
 const HomeScreen = () => {
   return (
     <>
-    <h1>Bienvenue sur sollen</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora earum amet unde adipisci repellendus et voluptatibus reiciendis quae laborum ducimus?</p>
+    <h1>Bienvenue sur solenn</h1>
+  
     <Button>Documentation</Button>
     </>
   )

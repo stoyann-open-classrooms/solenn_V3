@@ -1,7 +1,53 @@
 import mongoose from 'mongoose'
-
-const consomationSchema = mongoose.Schema(
+import UserSchema from './userModel.js'
+const simulationSchema = mongoose.Schema(
   {
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+
+    refference: {
+      type: String,
+    },
+
+    idPropal: {
+      type: String,
+      default: null,
+    },
+
+    // si True type abonement
+    raccordReseau: {
+      type: Boolean,
+    },
+
+    pro: {
+      type: Boolean,
+    },
+
+    typeAbonnement: {
+      type: String,
+      enum: ['Basse tension', 'Haute tension', 'non defini'],
+      default: 'non defini',
+    },
+
+    // Informations générales
+    typeInstallation: {
+      raccordement: {
+        type: String,
+        enum: ['mono', 'tri', 'non defini'],
+        default: 'non defini',
+      },
+      puissance: {
+        type: Number,
+        default: 0,
+      },
+      amperage: {
+        type: Number,
+        default: 0,
+      },
+    },
+
     consoN: {
       janv: {
         type: Number,
@@ -102,61 +148,7 @@ const consomationSchema = mongoose.Schema(
         default: 0,
       },
     },
-  },
-  {
-    timestamps: true,
-  },
-)
 
-const simulationSchema = mongoose.Schema(
-  {
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-
-    refference: {
-      type: String,
-    },
-
-    idPropal: {
-      type: String,
-      default: null,
-    },
-
-    // si True type abonement
-    raccordReseau: {
-      type: Boolean,
-    },
-
-    pro: {
-      type: Boolean,
-    },
-
-    typeAbonnement: {
-      type: String,
-      enum: ['Basse tension', 'Haute tension', 'non defini'],
-      default: 'non defini',
-    },
-
-    // Informations générales
-    typeInstallation: {
-      raccordement: {
-        type: String,
-        enum: ['mono', 'tri', 'non defini'],
-        default: 'non defini',
-      },
-      puissance: {
-        type: Number,
-        default: 0,
-      },
-      amperage: {
-        type: Number,
-        default: 0,
-      },
-    },
-
-    consomation: [consomationSchema],
     status: {
       type: String,
       enum: ['Simulation', 'Etude', 'En Service', 'Projet', 'Sans Suite'],
@@ -290,7 +282,6 @@ const simulationSchema = mongoose.Schema(
         _id: false, // Désactive la génération automatique de _id
         ref: { type: String },
         quantity: { type: Number },
-        supervision: { type: Number },
         multiprices: {
           pro: { type: Number },
           part: { type: Number },
@@ -298,6 +289,17 @@ const simulationSchema = mongoose.Schema(
       },
     ],
 
+    modulesPV: [
+      {
+        _id: false, // Désactive la génération automatique de _id
+        ref: { type: String },
+        quantity: { type: Number },
+        multiprices: {
+          pro: { type: Number },
+          part: { type: Number },
+        },
+      },
+    ],
     onduleurs: [
       {
         _id: false, // Désactive la génération automatique de _id
@@ -309,7 +311,8 @@ const simulationSchema = mongoose.Schema(
         },
       },
     ],
-    systemeDeSupportage: [
+
+    prestations: [
       {
         _id: false, // Désactive la génération automatique de _id
         ref: { type: String },
@@ -320,13 +323,22 @@ const simulationSchema = mongoose.Schema(
         },
       },
     ],
-
-    panneaux: [
+    suppervision: [
       {
         _id: false, // Désactive la génération automatique de _id
         ref: { type: String },
         quantity: { type: Number },
-        supervision: { type: Number },
+        multiprices: {
+          pro: { type: Number },
+          part: { type: Number },
+        },
+      },
+    ],
+    supportage: [
+      {
+        _id: false, // Désactive la génération automatique de _id
+        ref: { type: String },
+        quantity: { type: Number },
         multiprices: {
           pro: { type: Number },
           part: { type: Number },
@@ -344,14 +356,6 @@ const simulationSchema = mongoose.Schema(
 // // Reverse populate avec des virtuals
 // installationSchema.virtual('interventions', {
 //   ref: 'Intervention',
-//   localField: '_id',
-//   foreignField: 'installationId',
-//   justOne: false,
-// })
-
-// // Reverse populate avec des virtuals
-// installationSchema.virtual('maintenanceContracts', {
-//   ref: 'MaintenanceContract',
 //   localField: '_id',
 //   foreignField: 'installationId',
 //   justOne: false,
@@ -395,7 +399,7 @@ simulationSchema.pre('save', async function (next) {
   // Génération du champ refference
   if (!this.refference) {
     const currentYear = new Date().getFullYear()
-    const count = await Installation.countDocuments({
+    const count = await Simulation.countDocuments({
       refference: new RegExp(`^${currentYear}-`, 'i'),
     })
     console.log('Reference count:', count)

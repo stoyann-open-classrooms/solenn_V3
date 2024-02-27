@@ -11,9 +11,10 @@ export const simulationsApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Simulation'],
       keepUnusedDataFor: 5,
     }),
+
     getSimulationDetails: builder.query({
-      query: (id) => ({
-        url: `${SIMULATIONS_URL}/${id}`,
+      query: (simulationId) => ({
+        url: `${SIMULATIONS_URL}/${simulationId}`,
       }),
       keepUnusedDataFor: 5,
     }),

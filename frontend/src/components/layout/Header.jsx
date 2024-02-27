@@ -1,13 +1,11 @@
 import { Navbar, Nav, Container } from 'react-bootstrap'
 
 import {
-  FaBell,
+
   FaProductHunt,
   FaSolarPanel,
   FaUser,
   FaPlusCircle,
-  FaUserAltSlash,
-  FaUserTimes,
 
 } from 'react-icons/fa'
 
@@ -28,6 +26,11 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navabar-nav">
             <Nav className="ms-auto">
+              <LinkContainer to="/sollen-products">
+                <Nav.Link>
+                  <FaProductHunt /> Produits sollen
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/simulations">
                 <Nav.Link>
                   <FaSolarPanel /> Simulations
@@ -36,6 +39,11 @@ const Header = () => {
               <LinkContainer to="/creer-simulation">
                 <Nav.Link>
                   <FaPlusCircle/> Créer simulation
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/userlist">
+                <Nav.Link>
+                  <FaPlusCircle/> Gestions des utilisateur
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/login">

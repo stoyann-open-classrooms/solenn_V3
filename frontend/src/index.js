@@ -17,13 +17,24 @@ import App from './App'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import SimulationsScreen from './screens/SimulationsScreen'
-
+import SollenProductScreen from './screens/SollenProductScreen'
+import SimulationDetailsScreen from './screens/SimulationDetailsScreen'
+import SimulationEditScreen from './screens/SimulationEditScreen'
+import 'react-toastify/dist/ReactToastify.css'
+import SimulationGuide from './screens/SimulationGuide/SimulationGuide'
+import UserListScreen from './screens/UserListScreen'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/simulations" element={<SimulationsScreen />} />
+      <Route path="/simulation/:id" element={<SimulationDetailsScreen />} />
+      <Route path="/simulation-edit/:id" element={<SimulationEditScreen />} />
+      <Route path="/sollen-products" element={<SollenProductScreen />} />
+      <Route path="/userlist" element={<UserListScreen />} />
+
+      <Route path="/creer-simulation" element={<SimulationGuide />} />
     </Route>,
   ),
 )
